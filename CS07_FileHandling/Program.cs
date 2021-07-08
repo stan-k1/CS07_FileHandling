@@ -163,7 +163,7 @@ namespace CS07_FileHandling
                 //using StreamReader InputStream = File.OpenText(@"C:\CS07\Example.txt");
                 using StreamReader inputStream = new(@"C:\CS07\Example.txt");
 
-                using StreamWriter outputStream = new(@"C:\CS07\StreamOutput.txt");
+                using StreamWriter outputStream = new(@"C:\CS07\StreamOutput2.txt");
 
                 while (!inputStream.EndOfStream)
                 {
@@ -173,6 +173,31 @@ namespace CS07_FileHandling
             catch (IOException)
             {
                 Console.Error.WriteLine("An I/O exception occurred while trying to copy the file.");
+            }
+
+            //Random Access With Streams
+
+            Console.WriteLine();
+
+            using FileStream textInputStream1 = new(@"C:\CS07\Example.txt", FileMode.Open);
+            using (StreamReader textInputReader1 = new(textInputStream1))
+            {
+                textInputStream1.Seek(2, SeekOrigin.Begin); //rem ipsum dolor sit amet
+                Console.WriteLine(textInputReader1.ReadLine());
+            }
+
+            using FileStream textInputStream2 = new(@"C:\CS07\Example.txt", FileMode.Open);
+            using (StreamReader textInputReader2 = new(textInputStream2))
+            {
+                textInputStream2.Seek(-35, SeekOrigin.End);
+                Console.WriteLine(textInputReader2.ReadLine());
+            }
+
+            using FileStream pStream = new(@"C:\CS07\Example.txt", FileMode.Open);
+            using (StreamReader pReader = new(pStream))
+            {
+                pStream.Position = 6;
+                Console.WriteLine(pReader.ReadLine()); //ipsum dolor sit amet
             }
         }
     }
